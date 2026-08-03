@@ -1,0 +1,7 @@
+# Integris Health Data Systems — Domain Redirects
+# All secondary domains redirect to primary: integrishealthdata.com
+# 301 = permanent redirect (tells Google all domains are one site)
+
+https://integrishds.com/* https://integrishealthdata.com/:splat 301!
+https://integrishealthdatasystems.com/* https://integrishealthdata.com/:splat 301!
+https://integrishealthdata.org/* https://integrishealthdata.com/:splat 301!
