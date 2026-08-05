@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Integris Health Data Systems — Healthcare Informatics, Data Engineering &amp; Value-Based Care Analytics</title>
-<meta name="description" content="Integris Health Data Systems — Healthcare informatics, data engineering, and value-based care analytics. ACO REACH &amp; MSSP reporting, FHIR, clinical AI, digital pathology, and LabFlow LIMS for sub-Saharan Africa. Founded by an MD, PhD, MBA, FAMIA, ACHIP informatics scientist.">
+<meta name="description" content="Integris Health Data Systems — Healthcare informatics, data engineering, and value-based care analytics. ACO REACH &amp; MSSP reporting, FHIR, clinical AI, digital pathology, and LabFlow LIMS and Patient Portal for sub-Saharan Africa. Founded by an MD, PhD, MBA, FAMIA, ACHIP informatics scientist.">
 <meta name="keywords" content="ACO REACH analytics, MSSP reporting, BCDA pipeline, FHIR interoperability, healthcare data engineering, clinical AI, digital pathology, biomedical informatics, value-based care, health equity, population health, global health informatics, HMIS strengthening, digital health consulting, West Africa health data, Ministries of Health, Virginia healthcare consulting">
 <meta property="og:title" content="Integris Health Data Systems">
 <meta property="og:description" content="Clinical Expertise. Data Engineering. Better Healthcare.">
@@ -492,6 +492,74 @@
   }
   .product-live-link:hover { border-color: var(--gold); }
 
+
+  /* ── PATIENT PORTAL CARD ── */
+  .svc-card.portal-card {
+    background: #0f2235;
+    border-left: 4px solid #4a9b7f;
+    position: relative;
+  }
+  .svc-card.portal-card:hover { background: #142a3f; }
+  .svc-card.portal-card h3 { color: var(--cream); }
+  .svc-card.portal-card p { color: rgba(247,245,241,0.65); }
+  .svc-card.portal-card .svc-icon { background: rgba(74,155,127,0.15); }
+  .portal-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    background: rgba(74,155,127,0.15);
+    color: #4a9b7f;
+    border: 1px solid rgba(74,155,127,0.3);
+    padding: 2px 8px;
+    border-radius: 2px;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .portal-live-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: #4a9b7f;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(74,155,127,0.3);
+    padding-bottom: 1px;
+    transition: border-color 0.2s;
+  }
+  .portal-live-link:hover { border-color: #4a9b7f; }
+  .portal-how {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .portal-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 12px;
+    color: rgba(247,245,241,0.55);
+    line-height: 1.5;
+  }
+  .portal-step-n {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: #4a9b7f;
+    background: rgba(74,155,127,0.12);
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
 </style>
 </head>
 <body>
@@ -975,6 +1043,30 @@
       <p style="font-size:11px;color:rgba(247,245,241,0.45);margin-top:6px;font-family:'DM Mono',monospace;letter-spacing:0.05em;">Demo access: <strong style="color:var(--gold);">demo@integrishds.com</strong> &nbsp;/&nbsp; <strong style="color:var(--gold);">LabFlow2026!</strong> &nbsp;&mdash;&nbsp; no signup required</p>
     </div>
 
+    <div class="svc-card portal-card">
+      <span class="portal-badge">&#9679; Live Demo &nbsp;&middot;&nbsp; Patient-Facing Feature</span>
+      <div class="svc-icon">📱</div>
+      <h3>LabFlow Patient Portal</h3>
+      <p>Delivers laboratory results securely to patients&rsquo; phones &mdash; no app to install, no account to create. When a lab releases a report through LabFlow, the patient receives a secure link and a one-time code. Results are presented in plain language in English or French, with guidance to follow up with their clinician and the option to download the full signed report.</p>
+      <div class="portal-how">
+        <div class="portal-step"><span class="portal-step-n">1</span><span><strong style="color:rgba(247,245,241,0.85);">The lab releases the report.</strong> One action from the lab&rsquo;s normal workflow.</span></div>
+        <div class="portal-step"><span class="portal-step-n">2</span><span><strong style="color:rgba(247,245,241,0.85);">Patient gets a secure link.</strong> A one-time code sent to their phone confirms identity.</span></div>
+        <div class="portal-step"><span class="portal-step-n">3</span><span><strong style="color:rgba(247,245,241,0.85);">Results, explained.</strong> Plain language &mdash; English or French &mdash; with full report download.</span></div>
+      </div>
+      <div class="svc-tags" style="margin-top:12px;">
+        <span class="stag">No App Required</span>
+        <span class="stag">🇬🇧 EN / 🇫🇷 FR</span>
+        <span class="stag">Mobile-First</span>
+        <span class="stag">Secure OTP</span>
+        <span class="stag">SMS &amp; WhatsApp</span>
+        <span class="stag">Low-Bandwidth</span>
+      </div>
+      <a href="https://results.integrishds.com/demo" target="_blank" class="portal-live-link">
+        &#8599; Try the patient portal demo &nbsp;&middot;&nbsp; results.integrishds.com/demo
+      </a>
+      <p style="font-size:11px;color:rgba(247,245,241,0.38);margin-top:6px;font-style:italic;">Interactive demo &mdash; sample data only, no real patient information. Works in English and French.</p>
+    </div>
+
     <div class="svc-card">
       <div class="svc-icon">🧫</div>
       <h3>Bioinformatics &amp; Omics Data Science</h3>
@@ -1208,7 +1300,7 @@
       <h3>Every product starts as peer-reviewed science.<br>Every engagement generates publishable data.</h3>
       <p>Integris is not a software company that produces tools and moves on. We are a research-driven organization where every pipeline we build is also a contribution to the published literature, and every publication becomes preliminary data for the next product.</p>
       <p>This research-to-product flywheel means our clients benefit from solutions that have been academically validated before deployment &mdash; and that the infrastructure we build for you contributes to knowledge that advances the entire field.</p>
-      <p>Active NIH SBIR research programs include interpretable deep learning for bone marrow cytomorphology (NCI) and Azure-native FHIR + explainable AI governance infrastructure (NLM). The research-to-product pipeline is already in motion: <strong>LabFlow</strong>, our modular LIMS for sub-Saharan Africa, is live in production &mdash; an offline-first, bilingual (EN/FR) laboratory information system built for clinical labs in West Africa. Academic collaborations and co-investigator partnerships are actively sought.</p>
+      <p>Active NIH SBIR research programs include interpretable deep learning for bone marrow cytomorphology (NCI) and Azure-native FHIR + explainable AI governance infrastructure (NLM). The research-to-product pipeline is already in motion: <strong>LabFlow</strong>, our modular LIMS for sub-Saharan Africa, is live in production &mdash; an offline-first, bilingual (EN/FR) laboratory information system built for clinical labs in West Africa. The <strong>LabFlow Patient Portal</strong> extends this directly to patients: secure, plain-language results on any phone, no app required, in English or French. Academic collaborations and co-investigator partnerships are actively sought.</p>
     </div>
     <div class="ri-stats">
       <div class="ri-stat">
@@ -1327,8 +1419,8 @@
 
   <div class="gh-diagnostics">
     <div class="gh-diagnostics-label">Active Research Program &nbsp;&middot;&nbsp; Diagnostics AI for Resource-Limited Settings</div>
-    <h3>LabFlow + Clinical AI — A Full Diagnostic Stack for Sub-Saharan Africa</h3>
-    <p>LabFlow, our deployed LIMS MVP, provides the data infrastructure layer that clinical AI tools require to function in resource-limited settings. Integris is also developing interpretable AI tools for diagnostic support in those same environments &mdash; where hematopathology expertise is scarce and enterprise diagnostic platforms are inaccessible. Our published research in bone marrow cytomorphology classification (EfficientNet-B3, 87.6% Top-1 accuracy, 21 morphologic classes, with Grad-CAM and SHAP explainability) provides the scientific foundation for a clinical decision-support tool currently under NIH SBIR development. Approximately 700,000 bone marrow examinations are performed annually in the US alone &mdash; the vast majority at large academic centers. In West Africa, hematopathology expertise is even more concentrated and inaccessible. Our research agenda explicitly includes validating interpretable diagnostic AI in low-resource settings, including district hospitals and reference laboratories in West Africa, as part of our global health and commercialization strategy.</p>
+    <h3>LabFlow + Patient Portal + Clinical AI — A Full Diagnostic Stack for Sub-Saharan Africa</h3>
+    <p>LabFlow, our deployed LIMS, provides the lab-side data infrastructure. The LabFlow Patient Portal closes the loop &mdash; delivering results directly to patients&rsquo; phones in plain language, in English or French, with no app required. Together they form the basis for clinical AI tools that require to function in resource-limited settings. Integris is also developing interpretable AI tools for diagnostic support in those same environments &mdash; where hematopathology expertise is scarce and enterprise diagnostic platforms are inaccessible. Our published research in bone marrow cytomorphology classification (EfficientNet-B3, 87.6% Top-1 accuracy, 21 morphologic classes, with Grad-CAM and SHAP explainability) provides the scientific foundation for a clinical decision-support tool currently under NIH SBIR development. Approximately 700,000 bone marrow examinations are performed annually in the US alone &mdash; the vast majority at large academic centers. In West Africa, hematopathology expertise is even more concentrated and inaccessible. Our research agenda explicitly includes validating interpretable diagnostic AI in low-resource settings, including district hospitals and reference laboratories in West Africa, as part of our global health and commercialization strategy.</p>
   </div>
 </section>
 
