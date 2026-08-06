@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LEAD Readiness Assessment — Integris Health Data Systems</title>
+<meta name="description" content="Free ACO LEAD model readiness assessment. Score your data infrastructure across 6 domains and get a personalized remediation roadmap.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #0e1f35; --gold: #c8a44a; --gold-lt: #e8c87a;
+    --green: #1a6b3c; --green-bg: #e8f5ee; --green-bd: #b8ddc8;
+    --amber: #8a5a00; --amber-bg: #fff8e8; --amber-bd: #e8c878;
+    --red: #8b1a1a; --red-bg: #fdf0f0; --red-bd: #e8c8c8;
+    --blue: #185fa5; --blue-bg: #e6f1fb; --blue-bd: #b5d4f4;
+    --text: #111827; --text2: #4b5563; --text3: #9ca3af;
+    --bg: #f8f6f0; --surface: #fff; --border: #e5e0d8; --radius: 8px;
+  }
+  body { font-family: 'DM Sans', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* Nav */
+  nav { background: var(--navy); padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
+  nav a.logo { color: var(--gold); font-family: 'DM Mono', monospace; font-size: 13px; letter-spacing: 2px; text-decoration: none; text-transform: uppercase; }
+  nav a.home { color: rgba(255,255,255,0.6); font-size: 13px; text-decoration: none; }
+  nav a.home:hover { color: #fff; }
+
+  /* Layout */
+  .page { max-width: 700px; margin: 0 auto; padding: 40px 20px 60px; }
+
+  /* Card */
+  .card { background: var(--surface); border-radius: 12px; box-shadow: 0 2px 16px rgba(14,31,53,0.07); overflow: hidden; }
+  .card-header { background: var(--navy); padding: 28px 32px; border-bottom: 2px solid var(--gold); }
+  .card-body { padding: 32px; }
+
+  /* Typography */
+  .eyebrow { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .card-header h1 { font-family: 'EB Garamond', serif; font-size: 26px; font-weight: 500; color: #fff; line-height: 1.3; }
+  h3 { font-family: 'EB Garamond', serif; font-size: 19px; font-weight: 500; color: var(--text); line-height: 1.5; margin-bottom: 20px; }
+
+  /* Progress */
+  .progress-row { display: flex; justify-content: space-between; margin-bottom: 6px; }
+  .progress-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); }
+  .progress-count { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text3); }
+  .progress-track { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; margin-bottom: 20px; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-lt)); border-radius: 2px; transition: width 0.4s ease; }
+
+  /* Domain pills */
+  .pills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+  .pill { font-family: 'DM Mono', monospace; font-size: 10px; padding: 3px 10px; border-radius: 20px; border: 1px solid var(--border); background: var(--bg); color: var(--text3); }
+  .pill.active { background: var(--blue-bg); border-color: var(--blue-bd); color: var(--blue); }
+  .pill.done { background: var(--green-bg); border-color: var(--green-bd); color: var(--green); }
+
+  /* Option buttons */
+  .opt { display: block; width: 100%; padding: 13px 16px; margin-bottom: 9px; text-align: left; background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--radius); font-size: 14px; color: var(--text2); cursor: pointer; transition: all 0.15s; font-family: 'DM Sans', sans-serif; line-height: 1.4; }
+  .opt:hover { border-color: var(--gold); background: #fdf9f0; }
+  .opt.selected { background: var(--navy); border-color: var(--gold); color: var(--gold-lt); }
+
+  /* Buttons */
+  .btn-primary { width: 100%; padding: 14px; background: var(--navy); color: var(--gold-lt); border: none; border-radius: var(--radius); font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'DM Mono', monospace; letter-spacing: 2px; text-transform: uppercase; margin-top: 16px; transition: opacity 0.15s; }
+  .btn-primary:disabled { opacity: 0.35; cursor: not-allowed; }
+  .btn-back { background: none; border: 1px solid var(--border); border-radius: var(--radius); padding: 11px 18px; font-size: 13px; color: var(--text3); cursor: pointer; font-family: 'DM Sans', sans-serif; margin-top: 8px; margin-right: 8px; }
+  .btn-row { display: flex; gap: 8px; align-items: stretch; }
+  .btn-row .btn-primary { margin-top: 0; }
+
+  /* Stats */
+  .stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin-bottom: 20px; }
+  .stat { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; text-align: center; }
+  .stat-n { font-family: 'EB Garamond', serif; font-size: 24px; color: var(--navy); }
+  .stat-l { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text3); letter-spacing: 1px; text-transform: uppercase; margin-top: 3px; }
+
+  /* Callout */
+  .callout { background: var(--bg); border-left: 3px solid var(--gold); border-radius: 0 var(--radius) var(--radius) 0; padding: 13px 16px; margin-bottom: 20px; font-size: 13px; color: var(--text2); line-height: 1.6; font-style: italic; }
+
+  /* Gauge */
+  .gauge-wrap { text-align: center; margin-bottom: 24px; }
+  .cls-badge { display: inline-block; margin-top: 8px; padding: 4px 16px; border-radius: 20px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+
+  /* Domain bars */
+  .domain-bar-wrap { margin-bottom: 14px; }
+  .domain-bar-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+  .domain-bar-label { font-size: 13px; color: var(--text); }
+  .domain-bar-score { font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; }
+  .domain-bar-track { height: 6px; background: var(--border); border-radius: 3px; overflow: hidden; }
+  .domain-bar-fill { height: 100%; border-radius: 3px; opacity: 0.85; transition: width 1s ease; }
+  .domain-bar-desc { font-size: 11px; color: var(--text3); margin-top: 3px; font-style: italic; }
+
+  /* Priorities */
+  .priority-item { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+  .priority-num { min-width: 22px; height: 22px; border-radius: 50%; background: var(--navy); color: var(--gold-lt); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; margin-top: 1px; }
+  .priority-title { font-size: 13px; font-weight: 500; color: var(--text); }
+  .priority-desc { font-size: 12px; color: var(--text2); }
+
+  /* Form */
+  .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+  input[type=text], input[type=email], select {
+    width: 100%; padding: 10px 13px; border: 1.5px solid var(--border); border-radius: var(--radius);
+    font-size: 14px; font-family: 'DM Sans', sans-serif; color: var(--text); background: #fff; outline: none;
+  }
+  input:focus, select:focus { border-color: var(--gold); }
+  .form-err { color: var(--red); font-size: 12px; margin-bottom: 8px; display: none; }
+
+  /* Success */
+  .success-box { background: var(--green-bg); border: 1px solid var(--green-bd); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 16px; display: flex; gap: 10px; align-items: flex-start; }
+  .success-title { font-size: 13px; font-weight: 500; color: var(--green); }
+  .success-body { font-size: 12px; color: var(--text2); }
+
+  /* Section divider */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+  /* Footer */
+  .tool-footer { text-align: center; margin-top: 12px; font-size: 11px; color: var(--text3); }
+  .tool-footer a { color: var(--gold); text-decoration: none; }
+
+  /* Restart */
+  .restart-btn { background: none; border: none; color: var(--text3); font-size: 12px; cursor: pointer; text-decoration: underline; font-family: 'DM Mono', monospace; display: block; margin: 10px auto 0; }
+
+  @media (max-width: 480px) {
+    .input-grid { grid-template-columns: 1fr; }
+    .stats { grid-template-columns: repeat(3,1fr); }
+    .card-body { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="https://integrishealthdata.com">Integris Health Data Systems</a>
+  <a class="home" href="https://integrishealthdata.com">← Back to site</a>
+</nav>
+
+<div class="page">
+  <div class="card">
+    <div class="card-header">
+      <div class="eyebrow">Free Tool · 5 Minutes</div>
+      <h1>ACO LEAD Model<br>Readiness Assessment</h1>
+    </div>
+    <div class="card-body" id="app"></div>
+  </div>
+</div>
+
+<script>
+const FORMSPREE = "https://formspree.io/f/xoeaqpyr";
+
+const DOMAINS = [
+  { id:"infra", label:"Data infrastructure", weight:0.25, icon:"⚙️", desc:"BCDA API, pipeline automation, data warehouse",
+    questions:[
+      { text:"Is your organization connected to the CMS Beneficiary Claims Data API (BCDA)?", opts:[
+        {l:"Yes — pulling data in production",s:100},{l:"Yes — sandbox / testing only",s:50},{l:"In progress / planned",s:25},{l:"No — still using CCLF files only",s:0}]},
+      { text:"How does your team currently process CCLF files?", opts:[
+        {l:"Fully automated pipeline (Python, dbt, etc.)",s:100},{l:"Partially automated with some manual steps",s:60},{l:"Mostly manual — spreadsheets or SQL scripts",s:20},{l:"No structured process",s:0}]},
+      { text:"Does your organization have a cloud data warehouse for CMS claims data?", opts:[
+        {l:"Yes — production (Snowflake, Azure Synapse, BigQuery…)",s:100},{l:"Yes — basic (SQL Server, Redshift…)",s:60},{l:"No — data lives in spreadsheets or local databases",s:15},{l:"No structured storage",s:0}]}
+    ]},
+  { id:"attr", label:"Attribution accuracy", weight:0.15, icon:"🎯", desc:"Roster reconciliation, BCDA vs. CCLF concordance",
+    questions:[
+      { text:"Do you reconcile your CMS attribution roster against BCDA Patient data monthly?", opts:[
+        {l:"Yes — automated reconciliation with gap reporting",s:100},{l:"Yes — manual reconciliation",s:50},{l:"Occasionally / ad hoc",s:20},{l:"No reconciliation process",s:0}]},
+      { text:"Do you track beneficiaries who appear in your roster but are absent from BCDA data?", opts:[
+        {l:"Yes — tracked and actioned monthly",s:100},{l:"We're aware of the gap but don't actively track it",s:40},{l:"No — we weren't aware this was an issue",s:0}]}
+    ]},
+  { id:"equity", label:"Equity reporting", weight:0.20, icon:"⚖️", desc:"Race/ethnicity stratification, SDoH, LEAD mandate",
+    questions:[
+      { text:"Can you stratify your attributed population by race and ethnicity in your current reporting?", opts:[
+        {l:"Yes — built into our standard reporting",s:100},{l:"Yes — but requires manual effort each time",s:50},{l:"Partially — some demographic data available",s:25},{l:"No demographic stratification capability",s:0}]},
+      { text:"Do you incorporate Social Determinants of Health (SDoH) data into your analytics?", opts:[
+        {l:"Yes — integrated into population analytics",s:100},{l:"Partially — some SDoH data available",s:50},{l:"Planned but not implemented",s:15},{l:"No SDoH data integration",s:0}]},
+      { text:"Have you established an equity baseline for LEAD Year 1 comparison?", opts:[
+        {l:"Yes — documented and ready",s:100},{l:"In progress",s:40},{l:"No — haven't started",s:0}]}
+    ]},
+  { id:"care", label:"Care management data", weight:0.20, icon:"🏥", desc:"Care gap registry, ADT feeds, TCM integration",
+    questions:[
+      { text:"Does your organization maintain a care gap registry linked to claims data?", opts:[
+        {l:"Yes — automated, refreshed monthly from claims",s:100},{l:"Yes — manually maintained",s:50},{l:"Vendor tool not linked to claims",s:30},{l:"No care gap registry",s:0}]},
+      { text:"Do you receive ADT (Admit/Discharge/Transfer) notifications for your attributed population?", opts:[
+        {l:"Yes — real-time or near real-time",s:100},{l:"Yes — but with significant delay",s:50},{l:"Partial coverage only",s:25},{l:"No ADT feed",s:0}]},
+      { text:"Is your Transitional Care Management (TCM) workflow connected to your claims data?", opts:[
+        {l:"Yes — TCM triggers automated from claims/ADT",s:100},{l:"Partially connected",s:40},{l:"No — TCM workflow is manual and separate",s:0}]}
+    ]},
+  { id:"fhir", label:"FHIR compliance", weight:0.10, icon:"🔗", desc:"FHIR R4 adoption, BCDA v2, interoperability",
+    questions:[
+      { text:"Which BCDA API version is your organization using?", opts:[
+        {l:"BCDA v2 (FHIR R4) — current",s:100},{l:"BCDA v1 (FHIR STU3) — legacy",s:40},{l:"Not using BCDA API yet",s:0}]},
+      { text:"Does your EHR expose FHIR R4 APIs for data exchange?", opts:[
+        {l:"Yes — actively using FHIR APIs",s:100},{l:"Yes — available but not in use",s:50},{l:"FHIR STU3 only",s:30},{l:"No FHIR capability",s:0}]}
+    ]},
+  { id:"analytics", label:"Analytics maturity", weight:0.10, icon:"📊", desc:"Dashboard ownership, reproducible pipelines",
+    questions:[
+      { text:"Who owns your population health analytics dashboards?", opts:[
+        {l:"Built and owned internally — fully customizable",s:100},{l:"Vendor tool — we can configure but not modify",s:50},{l:"Ad-hoc reports from spreadsheets",s:20},{l:"No structured dashboards",s:0}]},
+      { text:"Are your analytics pipelines reproducible and documented?", opts:[
+        {l:"Yes — version-controlled, documented, tested",s:100},{l:"Partially documented",s:50},{l:"Tribal knowledge — depends on specific staff",s:15},{l:"No documentation",s:0}]}
+    ]}
+];
+
+const TOTAL_Q = DOMAINS.reduce((s,d)=>s+d.questions.length,0);
+
+let S = { phase:"intro", di:0, qi:0, answers:{}, form:{name:"",org:"",email:"",acoType:""}, submitting:false, submitted:false };
+
+function score() {
+  let ws=0; DOMAINS.forEach(d=>{
+    const qs=d.questions.map(q=>S.answers[d.id+"_"+q.text]).filter(v=>v!==undefined);
+    if(qs.length) ws+=(qs.reduce((a,b)=>a+b,0)/qs.length)*d.weight;
+  }); return Math.round(ws);
+}
+
+function ds(d) {
+  const qs=d.questions.map(q=>S.answers[d.id+"_"+q.text]).filter(v=>v!==undefined);
+  return qs.length?Math.round(qs.reduce((a,b)=>a+b,0)/qs.length):null;
+}
+
+function cls(s) {
+  if(s>=81) return {label:"Advanced",c:"var(--green)",bg:"var(--green-bg)",bd:"var(--green-bd)",desc:"Well-positioned for LEAD. Focus on optimization and equity depth."};
+  if(s>=66) return {label:"LEAD ready",c:"var(--blue)",bg:"var(--blue-bg)",bd:"var(--blue-bd)",desc:"Core infrastructure in place. Address remaining gaps before January 2027."};
+  if(s>=41) return {label:"Foundational",c:"var(--amber)",bg:"var(--amber-bg)",bd:"var(--amber-bd)",desc:"Significant gaps remain. An 8–12 week infrastructure engagement is recommended."};
+  return {label:"Critical gaps",c:"var(--red)",bg:"var(--red-bg)",bd:"var(--red-bd)",desc:"Major infrastructure work needed before LEAD launch. Act now — time is short."};
+}
+
+function answered() { return Object.keys(S.answers).length; }
+
+function render() {
+  const app=document.getElementById("app");
+  if(S.phase==="intro") app.innerHTML=intro();
+  else if(S.phase==="q") app.innerHTML=qpage();
+  else if(S.phase==="results") app.innerHTML=results();
+  bind();
+}
+
+function intro() { return `
+  <div class="eyebrow" style="margin-bottom:8px">Integris Health Data Systems</div>
+  <p style="font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:20px">The CMS ACO LEAD model launches <strong style="color:var(--navy)">January 2027</strong> and runs for 10 years. Monthly attribution reconciliation is required. Equity reporting is mandatory. Most ACOs are not ready.</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-n">6</div><div class="stat-l">Domains</div></div>
+    <div class="stat"><div class="stat-n">17</div><div class="stat-l">Questions</div></div>
+    <div class="stat"><div class="stat-n">5 min</div><div class="stat-l">To complete</div></div>
+  </div>
+  <div class="callout">This uses the same six-domain framework Integris uses in paid LEAD readiness engagements. Your score is instant. A personalized remediation roadmap is sent free when you submit.</div>
+  <button class="btn-primary" id="startBtn">Start assessment →</button>
+  <p style="font-size:11px;color:var(--text3);text-align:center;margin-top:10px">No account required. Results shared only when you choose to submit.</p>`; }
+
+function qpage() {
+  const d=DOMAINS[S.di]; const q=d.questions[S.qi]; const key=d.id+"_"+q.text;
+  const cur=S.answers[key]; const pct=Math.round((answered()/TOTAL_Q)*100);
+  const isLast=S.di===DOMAINS.length-1&&S.qi===d.questions.length-1;
+  return `
+  <div class="progress-row"><span class="progress-label">${d.icon} ${d.label}</span><span class="progress-count">${answered()} / ${TOTAL_Q}</span></div>
+  <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+  <div class="pills">${DOMAINS.map((dom,i)=>`<span class="pill${i===S.di?" active":i<S.di?" done":""}">${i<S.di?"✓ ":""}${dom.icon} ${dom.label}</span>`).join("")}</div>
+  <p class="eyebrow">Question ${answered()+1} of ${TOTAL_Q}</p>
+  <h3>${q.text}</h3>
+  ${q.opts.map(o=>`<button class="opt${cur===o.s?" selected":""}" data-score="${o.s}" data-key="${key}">${o.l}</button>`).join("")}
+  <div class="btn-row" style="margin-top:12px">
+    ${(S.di>0||S.qi>0)?`<button class="btn-back" id="backBtn">← Back</button>`:""}
+    <button class="btn-primary" id="nextBtn" ${cur===undefined?"disabled":""} style="margin-top:0">${isLast?"See my score →":"Next →"}</button>
+  </div>`; }
+
+function results() {
+  const s=score(); const c=cls(s);
+  const circ=2*Math.PI*52; const off=circ-(s/100)*circ;
+  const dc=s>=66?"var(--green)":s>=41?"var(--amber)":"var(--red)";
+  const priorities=DOMAINS.map(d=>({d,s:ds(d)??0})).filter(({s})=>s<66).sort((a,b)=>b.d.weight-a.d.weight).slice(0,3);
+  return `
+  <div class="gauge-wrap">
+    <p class="eyebrow" style="margin-bottom:12px">Your LEAD readiness score</p>
+    <svg width="130" height="130" viewBox="0 0 130 130" role="img" aria-label="Score: ${s}/100">
+      <circle cx="65" cy="65" r="52" fill="none" stroke="var(--border)" stroke-width="9"/>
+      <circle cx="65" cy="65" r="52" fill="none" stroke="${c.c}" stroke-width="9"
+        stroke-dasharray="${circ.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}"
+        stroke-linecap="round" transform="rotate(-90 65 65)" style="transition:stroke-dashoffset 1s ease"/>
+      <text x="65" y="60" text-anchor="middle" font-size="30" font-weight="500" fill="var(--navy)" font-family="EB Garamond,Georgia,serif">${s}</text>
+      <text x="65" y="78" text-anchor="middle" font-size="12" fill="var(--text3)" font-family="DM Mono,monospace">/100</text>
+    </svg>
+    <span class="cls-badge" style="background:${c.bg};color:${c.c};border:1px solid ${c.bd}">${c.label}</span>
+    <p style="font-size:13px;color:var(--text2);margin-top:10px;max-width:440px;margin-left:auto;margin-right:auto;line-height:1.6">${c.desc}</p>
+  </div>
+  <hr class="divider">
+  <p class="eyebrow" style="margin-bottom:14px">Domain breakdown</p>
+  ${DOMAINS.map(d=>{const dsc=ds(d)??0;const fc=dsc>=66?"var(--green)":dsc>=41?"var(--amber)":"var(--red)";return`
+    <div class="domain-bar-wrap">
+      <div class="domain-bar-row"><span class="domain-bar-label">${d.icon} ${d.label}</span><span class="domain-bar-score" style="color:${fc}">${dsc}/100</span></div>
+      <div class="domain-bar-track"><div class="domain-bar-fill" style="width:${dsc}%;background:${fc}"></div></div>
+      <p class="domain-bar-desc">${d.desc}</p>
+    </div>`}).join("")}
+  ${priorities.length?`
+  <hr class="divider">
+  <p class="eyebrow" style="margin-bottom:12px">Top priorities</p>
+  <div style="background:var(--bg);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:20px">
+    ${priorities.map(({d,s:dsc},i)=>`
+      <div class="priority-item">
+        <div class="priority-num">${i+1}</div>
+        <div><div class="priority-title">${d.label} — ${dsc}/100</div><div class="priority-desc">${d.desc}</div></div>
+      </div>`).join("")}
+  </div>`:""}
+  <hr class="divider">
+  ${S.submitted?`
+  <div class="success-box">
+    <span style="font-size:20px;color:var(--green)">✓</span>
+    <div><div class="success-title">Report request sent</div><div class="success-body">We'll send your personalized roadmap to ${S.form.email} within one business day.</div></div>
+  </div>`:`
+  <div style="background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:12px">
+    <p class="eyebrow" style="margin-bottom:6px">Get your full report</p>
+    <p style="font-size:15px;font-weight:500;color:var(--navy);margin-bottom:4px">Receive a personalized remediation roadmap</p>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:16px;line-height:1.5">Domain-specific recommendations and a prioritized action checklist — no cost, no obligation.</p>
+    <div class="input-grid">
+      <input type="text" id="fname" placeholder="Your name *" value="${S.form.name}">
+      <input type="text" id="forg" placeholder="Organization *" value="${S.form.org}">
+    </div>
+    <input type="email" id="femail" placeholder="Work email *" value="${S.form.email}" style="width:100%;margin-bottom:10px">
+    <select id="facoType" style="margin-bottom:10px">
+      <option value="">ACO type (optional)</option>
+      ${["ACO REACH","MSSP","LEAD Applicant","Hospital / Health System","FQHC","Other"].map(t=>`<option ${S.form.acoType===t?"selected":""}>${t}</option>`).join("")}
+    </select>
+    <div class="form-err" id="formErr"></div>
+    <button class="btn-primary" id="submitBtn" style="margin-top:0">${S.submitting?"Sending...":"Send my report →"}</button>
+    <p style="font-size:11px;color:var(--text3);text-align:center;margin-top:10px">Results go directly to Integris. We reply within one business day.</p>
+  </div>`}
+  <button class="restart-btn" id="restartBtn">Start over</button>
+  <div class="tool-footer" style="margin-top:16px">
+    <a href="https://integrishealthdata.com">integrishealthdata.com</a> · info@integrishealthdata.com · Integris Health Data Systems · Fairfax County, Virginia
+  </div>`; }
+
+function bind() {
+  document.getElementById("startBtn")?.addEventListener("click",()=>{S.phase="q";render();});
+  document.getElementById("backBtn")?.addEventListener("click",()=>{
+    if(S.qi>0){S.qi--;}else if(S.di>0){S.di--;S.qi=DOMAINS[S.di].questions.length-1;}render();});
+  document.getElementById("nextBtn")?.addEventListener("click",()=>{
+    const d=DOMAINS[S.di];const q=d.questions[S.qi];const key=d.id+"_"+q.text;
+    if(S.answers[key]===undefined)return;
+    if(S.qi<d.questions.length-1){S.qi++;}else if(S.di<DOMAINS.length-1){S.di++;S.qi=0;}else{S.phase="results";}
+    render();});
+  document.getElementById("restartBtn")?.addEventListener("click",()=>{
+    S={phase:"intro",di:0,qi:0,answers:{},form:{name:"",org:"",email:"",acoType:""},submitting:false,submitted:false};render();});
+  document.querySelectorAll(".opt[data-score]").forEach(b=>{
+    b.addEventListener("click",()=>{S.answers[b.dataset.key]=parseInt(b.dataset.score);render();});});
+  document.getElementById("submitBtn")?.addEventListener("click",async()=>{
+    const name=document.getElementById("fname").value.trim();
+    const org=document.getElementById("forg").value.trim();
+    const email=document.getElementById("femail").value.trim();
+    const acoType=document.getElementById("facoType").value;
+    const err=document.getElementById("formErr");
+    if(!name||!org||!email){err.textContent="Name, organization, and email are required.";err.style.display="block";return;}
+    if(!email.includes("@")){err.textContent="Please enter a valid email address.";err.style.display="block";return;}
+    err.style.display="none";S.form={name,org,email,acoType};S.submitting=true;render();
+    const s=score();const c=cls(s);
+    try {
+      const res=await fetch(FORMSPREE,{method:"POST",
+        headers:{"Content-Type":"application/json","Accept":"application/json"},
+        body:JSON.stringify({name,org,email,acoType,score:s,classification:c.label,
+          _subject:`LEAD Assessment — ${org} scored ${s}/100 (${c.label})`,
+          message:`LEAD Readiness Assessment\n\nScore: ${s}/100 — ${c.label}\nOrg: ${org}\nContact: ${name}\nEmail: ${email}\nACO Type: ${acoType||"Not specified"}\n\nDomain Scores:\n${DOMAINS.map(d=>`  ${d.label}: ${ds(d)??0}/100`).join("\n")}`})});
+      if(res.ok){S.submitted=true;}else{
+        document.getElementById("formErr").textContent="Submission failed. Email info@integrishealthdata.com directly.";
+        document.getElementById("formErr").style.display="block";}
+    } catch {
+      document.getElementById("formErr").textContent="Submission failed. Email info@integrishealthdata.com directly.";
+      document.getElementById("formErr").style.display="block";}
+    S.submitting=false;render();});
+}
+
+render();
+</script>
+</body>
+</html>
